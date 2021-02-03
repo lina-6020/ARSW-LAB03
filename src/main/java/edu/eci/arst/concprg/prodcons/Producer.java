@@ -29,13 +29,13 @@ public class Producer extends Thread {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         while (true) {
 
             dataSeed = dataSeed + rand.nextInt(100);
             System.out.println("Producer added " + dataSeed);
             queue.add(dataSeed);
-            
+            notify();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -44,4 +44,6 @@ public class Producer extends Thread {
 
         }
     }
+    
+
 }
