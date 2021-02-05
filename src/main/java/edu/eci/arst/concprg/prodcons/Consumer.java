@@ -24,10 +24,12 @@ public class Consumer extends Thread{
     @Override
     public void run() {
         while (true) {
-            if (queue.size() > 0) {
-                int elem=queue.poll();
-                System.out.println("Consumer consumes "+elem);                                
-            }
+        	try {
+				consume();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
     }
 
