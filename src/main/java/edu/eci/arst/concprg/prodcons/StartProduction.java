@@ -1,4 +1,5 @@
 /*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -23,9 +24,7 @@ public class StartProduction {
         Queue<Integer> queue=new LinkedBlockingQueue<>();
         
         
-        Thread p = new Producer(queue,Long.MAX_VALUE);
-        		p.start();
-        
+        new Producer(queue,Long.MAX_VALUE).start();
         
         //let the producer create products for 5 seconds (stock).
         try {
@@ -37,16 +36,6 @@ public class StartProduction {
         
         Thread c = new Consumer(queue);
         c.start();
-        
-        try {
-			p.join();
-			c.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        
     }
     
 

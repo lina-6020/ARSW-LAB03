@@ -29,21 +29,28 @@ public class Producer extends Thread {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         while (true) {
-
-            dataSeed = dataSeed + rand.nextInt(100);
-            System.out.println("Producer added " + dataSeed);
-            queue.add(dataSeed);
-            notify();
             try {
-                Thread.sleep(1000);
+                produce();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
     }
-    
 
+    private void produce() throws InterruptedException {
+        synchronized(queue) {
+            while(queue.size()>=stockLimit) {
+                queue.wait();
+            }
+
+            dataSeed = dataSeed + rand.nextInt(100);
+            System.out.println("Producer added " + dataSeed);
+            queue.add(dataSeed);
+            queue.notifyAll();
+        }
+    }
 }
+
