@@ -17,8 +17,16 @@ Este laboratorio tiene como fin que el estudiante conozca y aplique conceptos pr
 Control de hilos con wait/notify. Productor/consumidor.
 
 1. Revise el funcionamiento del programa y ejecútelo. Mientras esto ocurren, ejecute jVisualVM y revise el consumo de CPU del proceso correspondiente. A qué se debe este consumo?, cual es la clase responsable?
+    * El consumo se debe a la falta de sincronización , la clase responsable es la clase Consumer 
+    ![image](https://user-images.githubusercontent.com/59893804/107459247-c9498c80-6b23-11eb-8f22-cf53a27c004f.png)
+
 2. Haga los ajustes necesarios para que la solución use más eficientemente la CPU, teniendo en cuenta que -por ahora- la producción es lenta y el consumo es rápido. Verifique con JVisualVM que el consumo de CPU se reduzca.
+    * Consumo reducido 
+    ![image](https://user-images.githubusercontent.com/59893804/107459315-e7af8800-6b23-11eb-8f48-a1b842292adb.png)
+
 3. Haga que ahora el productor produzca muy rápido, y el consumidor consuma lento. Teniendo en cuenta que el productor conoce un límite de Stock (cuantos elementos debería tener, a lo sumo en la cola), haga que dicho límite se respete. Revise el API de la colección usada como cola para ver cómo garantizar que dicho límite no se supere. Verifique que, al poner un límite pequeño para el 'stock', no haya consumo alto de CPU ni errores.
+    * Consumo en el caso donde el productor produzca más rápido y el consumidor consuma más lento
+    ![image](https://user-images.githubusercontent.com/59893804/107459412-25141580-6b24-11eb-9dec-8a508347df1a.png)
 
 
 #### Parte II. – Antes de terminar la clase.
@@ -42,12 +50,15 @@ Sincronización y Dead-Locks.
 	* El juego podría nunca tener un único ganador. Lo más probable es que al final sólo queden dos, peleando indefinidamente quitando y sumando puntos de vida.
 
 2. Revise el código e identifique cómo se implemento la funcionalidad antes indicada. Dada la intención del juego, un invariante debería ser que la sumatoria de los puntos de vida de todos los jugadores siempre sea el mismo(claro está, en un instante de tiempo en el que no esté en proceso una operación de incremento/reducción de tiempo). Para este caso, para N jugadores, cual debería ser este valor?.
-
+    * Para N jugadores el invariante deberia ser n* default (100)
+    
 3. Ejecute la aplicación y verifique cómo funcionan las opción ‘pause and check’. Se cumple el invariante?.
+    * No se cumple el invariante por falta de soncronización ya que había condiciones de carrera 
 
 4. Una primera hipótesis para que se presente la condición de carrera para dicha función (pause and check), es que el programa consulta la lista cuyos valores va a imprimir, a la vez que otros hilos modifican sus valores. Para corregir esto, haga lo que sea necesario para que efectivamente, antes de imprimir los resultados actuales, se pausen todos los demás hilos. Adicionalmente, implemente la opción ‘resume’.
 
 5. Verifique nuevamente el funcionamiento (haga clic muchas veces en el botón). Se cumple o no el invariante?.
+    * No se cumple porque no se respetan las regiones criticas
 
 6. Identifique posibles regiones críticas en lo que respecta a la pelea de los inmortales. Implemente una estrategia de bloqueo que evite las condiciones de carrera. Recuerde que si usted requiere usar dos o más ‘locks’ simultáneamente, puede usar bloques sincronizados anidados:
 
