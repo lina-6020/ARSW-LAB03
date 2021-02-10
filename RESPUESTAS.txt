@@ -1,0 +1,7 @@
+
+Parte II
+10 Si se podria crear una condición de carrera ya que cada jugador siempre tiene que tener un oponente
+
+ALGUNAS CONCLUSIONES:
+* Es necesario saber identificar las regiones criticas para que las condiciones se cumplan correctamente y la información no se pierda 
+* Para no hacer uso del método synchronized hicimos uso de "atomic boolean" que nos permitia que todos los hilos no accedieran a la variable al mismo tiempo 
